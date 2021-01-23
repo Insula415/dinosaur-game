@@ -1,0 +1,10 @@
+D:\Desktop\new\Dinosaur Game\bin\Debug\Dinosaur Game.exe.config
+D:\Desktop\new\Dinosaur Game\bin\Debug\Dinosaur Game.exe
+D:\Desktop\new\Dinosaur Game\bin\Debug\Dinosaur Game.pdb
+D:\Desktop\new\Dinosaur Game\obj\Debug\Dinosaur Game.csprojAssemblyReference.cache
+D:\Desktop\new\Dinosaur Game\obj\Debug\Dinosaur_Game.Form1.resources
+D:\Desktop\new\Dinosaur Game\obj\Debug\Dinosaur_Game.Properties.Resources.resources
+D:\Desktop\new\Dinosaur Game\obj\Debug\Dinosaur Game.csproj.GenerateResource.cache
+D:\Desktop\new\Dinosaur Game\obj\Debug\Dinosaur Game.csproj.CoreCompileInputs.cache
+D:\Desktop\new\Dinosaur Game\obj\Debug\Dinosaur Game.exe
+D:\Desktop\new\Dinosaur Game\obj\Debug\Dinosaur Game.pdb
