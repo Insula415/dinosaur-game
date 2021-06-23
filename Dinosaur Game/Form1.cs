@@ -35,17 +35,27 @@ namespace Dinosaur_Game
         {
 
         }
+        
+        /// <summary>
+        /// Called every tick in the game.
+        /// Handles game updates.
+        /// </summary>
+        /// <param name="sender">WinForms default</param>
+        /// <param name="e">WinForms default</param>
         private void GameEvent(object sender, EventArgs e)
         {
             Trex.Top += _jumpSpeed;
 
+            // Update the score display
             txtScore.Text = "Score: " + _score;
 
+            // Cancel the jumping if the player's jump hie
             if (_jumping && _force < 0)
             {
                 _jumping = false;
             }
 
+            // Check if the player is jumping to apply velocity
             if (_jumping)
             {
                 _jumpSpeed = -12;
@@ -61,12 +71,14 @@ namespace Dinosaur_Game
                 if (!(x is PictureBox) || (string) x.Tag != "obstacle") continue;
                 x.Left -= _obstacleSpeed;
 
+                // Do something with the score
                 if (x.Left + x.Width < -120)
                 {
                     x.Left = this.ClientSize.Width + _rand.Next(200, 800);
                     _score++;
                 }
 
+                // Check for collisions
                 if (!Trex.Bounds.IntersectsWith(x.Bounds)) continue;
                 gameTimer.Stop();
                 Trex.Image = Properties.Resources.dead;
@@ -87,9 +99,12 @@ namespace Dinosaur_Game
             }
         }
 
+        /// <summary>
+        /// Resets the game after a loss
+        /// </summary>
         private void ResetGame()
         {
-           
+            // TODO: Make constants for default values
             _force = 12; 
             Trex.Top = Floor.Top - Trex.Height; 
             _jumpSpeed = 0; 
@@ -108,6 +123,12 @@ namespace Dinosaur_Game
             }
             gameTimer.Start();
         }
+        
+        /// <summary>
+        /// Key listener
+        /// </summary>
+        /// <param name="sender">WinForms default</param>
+        /// <param name="e">WinForms default</param>
         private void KeyIsDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Space && !_jumping)
@@ -115,6 +136,12 @@ namespace Dinosaur_Game
                 _jumping = true;
             }
         }
+        
+        /// <summary>
+        /// Key listener
+        /// </summary>
+        /// <param name="sender">WinForms default</param>
+        /// <param name="e">WinForms default</param>
         private void KeyIsUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.R)
