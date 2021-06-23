@@ -115,8 +115,8 @@ namespace Dinosaur_Game
             this.Name = "Form1";
             this.Text = "Dinosaur Game";
             this.Load += new System.EventHandler(this.Form1_Load);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.keyisdown);
-            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.keyisup);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.KeyIsDown);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.KeyIsUp);
             ((System.ComponentModel.ISupportInitialize)(this.Floor)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Trex)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.obstacle1)).EndInit();

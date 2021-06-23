@@ -1,30 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Dinosaur_Game
 {
     public partial class Form1 : Form
     {
-        bool jumping = false;
-        int jumpSpeed = 10;
-        int force = 12;
-        int score = 0;
-        int obstacleSpeed = 10;
-        readonly Random rand = new Random();
+        private bool _jumping;
+        private int _jumpSpeed = 10;
+        private int _force = 12;
+        private int _score;
+        private int _obstacleSpeed = 10;
+        private readonly Random _rand = new Random();
 
 
         public Form1()
         {
             InitializeComponent();
 
-            resetGame();
+            ResetGame();
         }
 
 
@@ -44,100 +37,93 @@ namespace Dinosaur_Game
         }
         private void GameEvent(object sender, EventArgs e)
         {
-            Trex.Top += jumpSpeed;
+            Trex.Top += _jumpSpeed;
 
-            txtScore.Text = "Score: " + score;
+            txtScore.Text = "Score: " + _score;
 
-            if (jumping && force < 0)
+            if (_jumping && _force < 0)
             {
-                jumping = false;
+                _jumping = false;
             }
 
-            if (jumping)
+            if (_jumping)
             {
-                jumpSpeed = -12;
-                force -= 1;
+                _jumpSpeed = -12;
+                _force -= 1;
             }
             else
             {
-                jumpSpeed = 12;
+                _jumpSpeed = 12;
             }
 
             foreach (Control x in this.Controls)
             {
-                if (x is PictureBox && (string)x.Tag == "obstacle")
+                if (!(x is PictureBox) || (string) x.Tag != "obstacle") continue;
+                x.Left -= _obstacleSpeed;
+
+                if (x.Left + x.Width < -120)
                 {
-                    x.Left -= obstacleSpeed;
-
-                    if (x.Left + x.Width < -120)
-                    {
-                        x.Left = this.ClientSize.Width + rand.Next(200, 800);
-                        score++;
-                    }
-
-                    if (Trex.Bounds.IntersectsWith(x.Bounds))
-                    {
-                        gameTimer.Stop();
-                        Trex.Image = Properties.Resources.dead;
-                        txtScore.Text += "  Press R to restart";
-                    }
+                    x.Left = this.ClientSize.Width + _rand.Next(200, 800);
+                    _score++;
                 }
+
+                if (!Trex.Bounds.IntersectsWith(x.Bounds)) continue;
+                gameTimer.Stop();
+                Trex.Image = Properties.Resources.dead;
+                txtScore.Text += "  Press R to restart";
             }
-            if (Trex.Top >= 380 && !jumping)
+            if (Trex.Top >= 380 && !_jumping)
             {
                 
-                force = 12; 
+                _force = 12; 
                 Trex.Top = Floor.Top - Trex.Height; 
-                jumpSpeed = 0;
+                _jumpSpeed = 0;
             }
 
             
-            if (score >= 10)
+            if (_score >= 10)
             {
-                obstacleSpeed = 15;
+                _obstacleSpeed = 15;
             }
         }
-        public void resetGame()
+
+        private void ResetGame()
         {
            
-            force = 12; 
+            _force = 12; 
             Trex.Top = Floor.Top - Trex.Height; 
-            jumpSpeed = 0; 
-            jumping = false;
-            score = 0;
-            obstacleSpeed = 10; 
-            txtScore.Text = "Score: " + score; 
+            _jumpSpeed = 0; 
+            _jumping = false;
+            _score = 0;
+            _obstacleSpeed = 10; 
+            txtScore.Text = "Score: " + _score; 
             Trex.Image = Properties.Resources.running; 
 
             foreach (Control x in this.Controls)
             {
-                
-                if (x is PictureBox && (string)x.Tag == "obstacle")
-                {
+                if (!(x is PictureBox) || (string) x.Tag != "obstacle") continue;
+                var position = _rand.Next(600, 1000);
                     
-                    int position = rand.Next(600, 1000);
-                    
-                    x.Left = 640 + (x.Left + position + x.Width * 3);
-                }
+                x.Left = 640 + (x.Left + position + x.Width * 3);
             }
             gameTimer.Start();
         }
-        private void keyisdown(object sender, KeyEventArgs e)
+        private void KeyIsDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Space && !jumping)
+            if (e.KeyCode == Keys.Space && !_jumping)
             {
-                jumping = true;
+                _jumping = true;
             }
         }
-        private void keyisup(object sender, KeyEventArgs e)
+        private void KeyIsUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.R)
             {
-                resetGame();
+                ResetGame();
             }
-            if (jumping)
+            if (_jumping)
             {
-                jumping = false;
+                _jumping = false;
             }
         }
     }
